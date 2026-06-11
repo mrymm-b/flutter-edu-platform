@@ -23,19 +23,11 @@ class WelcomePage extends StatelessWidget {
                 children: [
                   const Spacer(flex: 3),
 
-                  // ── Logo lockup ─────────────────────────────────────────
-                  Semantics(
-                    label: 'منصة التعليم الشاملة',
-                    child: Image.asset(
-                      'assets/logo.png',
-                      width: 180,
-                      height: 90,
-                      errorBuilder: (_, __, ___) => Icon(
-                        Icons.school_rounded,
-                        size: 72,
-                        color: t.accent,
-                      ),
-                    ),
+                  // ── App icon ─────────────────────────────────────────
+                  Icon(
+                    Icons.school_rounded,
+                    size: 72,
+                    color: t.accent,
                   ),
 
                   const SizedBox(height: 20),
