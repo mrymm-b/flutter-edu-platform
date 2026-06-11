@@ -1,0 +1,45 @@
+appId: com.example.my_app
+name: "09 · Teacher — Login & verify home"
+---
+- clearState
+- launchApp
+- waitForAnimationToEnd
+
+- runFlow:
+    file: ../subflows/_login_teacher.yaml
+    env:
+      OTP: "123456"
+
+- waitForAnimationToEnd
+
+# ── Teacher home elements ─────────────────────────────────────────
+- assertVisible:
+    id: "teacher_home_btn_start_live"
+- assertVisible:
+    id: "teacher_nav_home"
+- assertVisible:
+    id: "teacher_nav_courses"
+- assertVisible:
+    id: "teacher_nav_chat"
+- assertVisible:
+    id: "teacher_nav_profile"
+
+# ── Logout via teacher profile ────────────────────────────────────
+- tapOn:
+    id: "teacher_nav_profile"
+
+- scrollUntilVisible:
+    element:
+      id: "teacher_profile_btn_logout"
+    direction: DOWN
+
+- tapOn:
+    id: "teacher_profile_btn_logout"
+- assertVisible:
+    id: "teacher_profile_dialog_btn_cancel_logout"
+- assertVisible:
+    id: "teacher_profile_dialog_btn_confirm_logout"
+- tapOn:
+    id: "teacher_profile_dialog_btn_confirm_logout"
+- assertVisible:
+    id: "login_field_phone"

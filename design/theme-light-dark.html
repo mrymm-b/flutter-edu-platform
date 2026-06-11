@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arab BH — Light &amp; Dark</title>
+<link rel="stylesheet" href="arabbh.css">
+<style>
+  html,body{margin:0;height:100%;background:#eceaf2;}
+  .note{width:100%;height:100%;background:#fff;border:1px solid #E7E5EE;border-radius:16px;
+    padding:22px;overflow:hidden;font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;direction:ltr;text-align:left;}
+  .note .grp{margin-bottom:15px;}
+  .note .lab{font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;margin:0 0 6px;display:flex;align-items:center;gap:6px;}
+  .note .lab .d{width:9px;height:9px;border-radius:50%;display:inline-block;}
+  .note .lab.lt{color:#56539A;} .note .lab.lt .d{background:#fff;border:1px solid #cfcde0;}
+  .note .lab.dk{color:#56539A;} .note .lab.dk .d{background:#16151F;}
+  .note .lab.ac{color:#5B54C2;} .note .lab.ac .d{background:#5B54C2;}
+  .note ul{margin:0;padding:0;list-style:none;}
+  .note li{font-size:12px;line-height:1.5;color:#3C3B47;padding-inline-start:14px;position:relative;margin-bottom:4px;}
+  .note li:before{content:'';position:absolute;inset-inline-start:2px;top:7px;width:4px;height:4px;border-radius:50%;background:#C9C7D4;}
+  .note li b{color:#16151D;font-weight:600;}
+  /* system board */
+  .sys{width:100%;height:100%;border-radius:18px;overflow:hidden;display:flex;font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;}
+  .sys .half{flex:1;padding:24px 26px;display:flex;flex-direction:column;gap:16px;}
+  .sys .l{background:#fff;color:#16151D;}
+  .sys .r{background:radial-gradient(120% 65% at 50% -12%, rgba(139,92,246,.38), transparent 60%), radial-gradient(80% 50% at 108% 0%, rgba(99,80,224,.28), transparent 55%), linear-gradient(180deg,#1C1737,#110D20);color:#F3F1FB;}
+  .sys h3{margin:0;font-size:17px;font-weight:700;letter-spacing:-.2px;}
+  .sys p{margin:0;font-size:12px;line-height:1.55;}
+  .sys .l p{color:#79767F;} .sys .r p{color:#928FA4;}
+  .sys .sw{display:flex;gap:8px;}
+  .sys .sw i{width:42px;height:42px;border-radius:11px;display:block;}
+  .sys small{font-size:9.5px;font-family:ui-monospace,monospace;opacity:.7;}
+  .swc{display:flex;flex-direction:column;gap:5px;align-items:flex-start;}
+  .pill{height:40px;padding:0 18px;border-radius:12px;font-size:13px;font-weight:600;display:inline-flex;align-items:center;}
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="shared.jsx"></script>
+<script type="text/babel" src="screens-onboarding.jsx"></script>
+<script type="text/babel" src="screens-home.jsx"></script>
+<script type="text/babel" src="screens-courses-content.jsx"></script>
+<script type="text/babel" src="screens-schedule-profile.jsx"></script>
+<script type="text/babel">
+const Dark = ({children}) => <div className="theme-dark" style={{width:'100%',height:'100%'}}>{children}</div>;
+
+function Notes({light, dark, accent}){
+  const blk=(cls,lab,items)=>(
+    <div className="grp">
+      <p className={'lab '+cls}><span className="d"></span>{lab}</p>
+      <ul>{items.map((x,i)=><li key={i} dangerouslySetInnerHTML={{__html:x}}/>)}</ul>
+    </div>
+  );
+  return (
+    <div className="note">
+      {blk('lt','Light',light)}
+      {blk('dk','Dark',dark)}
+      {blk('ac','Where purple appears',accent)}
+    </div>
+  );
+}
+
+function SystemBoard(){
+  const Sw=({c,n,light})=> <div className="swc"><i style={{background:c, border: c.toLowerCase()==='#ffffff'?'1px solid #e7e5ee':'none'}}></i><small>{n}</small></div>;
+  return (
+    <div className="sys">
+      <div className="half l">
+        <h3>Light theme</h3>
+        <p>Clean white surfaces, generous whitespace. Purple is a brand accent only — primary buttons, active states, progress, selected tabs.</p>
+        <div className="sw">
+          <Sw c="#FFFFFF" n="bg/card"/><Sw c="#F7F7FB" n="bg-2"/><Sw c="#16151D" n="ink"/>
+          <Sw c="#5B54C2" n="accent"/><Sw c="#ECEBFA" n="tint"/>
+        </div>
+        <div style={{display:'flex',gap:10,marginTop:'auto'}}>
+          <span className="pill" style={{background:'#5B54C2',color:'#fff'}}>زر رئيسي</span>
+          <span className="pill" style={{background:'#fff',border:'1px solid #ECEBF0',color:'#564FB8'}}>ثانوي</span>
+        </div>
+      </div>
+      <div className="half r">
+        <h3>Dark theme — atmospheric</h3>
+        <p>A midnight-indigo environment with ambient violet lighting. Glass-layered cards float over a glowing gradient; soft glows sit under buttons, avatars &amp; active states. Depth and richness — not flat surfaces with purple buttons.</p>
+        <div className="sw">
+          <Sw c="#16122A" n="base"/><Sw c="#3A315C" n="glass"/><Sw c="#F3F1FB" n="ink"/>
+          <Sw c="#7E5BF0" n="accent"/><Sw c="#8B5CF6" n="glow"/>
+        </div>
+        <div style={{display:'flex',gap:10,marginTop:'auto'}}>
+          <span className="pill" style={{background:'linear-gradient(180deg,#9168F5,#6A47E2)',color:'#fff',boxShadow:'0 10px 24px -6px rgba(126,91,240,.7)'}}>زر رئيسي</span>
+          <span className="pill" style={{background:'rgba(255,255,255,.05)',border:'1px solid rgba(255,255,255,.12)',color:'#BBA9FF'}}>ثانوي</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const W=300, H=652, H_HOME=985, H_PROFILE=840, H_TALL=700;
+
+function Row({id,title,subtitle,screen,h=H,notes}){
+  return (
+    <DCSection id={id} title={title} subtitle={subtitle}>
+      <DCArtboard id={id+'-notes'} label="Theme notes" width={320} height={h}><Notes {...notes}/></DCArtboard>
+      <DCArtboard id={id+'-light'} label="Light" width={W} height={h}>{screen}</DCArtboard>
+      <DCArtboard id={id+'-dark'} label="Dark" width={W} height={h}><Dark>{screen}</Dark></DCArtboard>
+    </DCSection>
+  );
+}
+
+function App(){
+  return (
+    <DesignCanvas>
+      <DCSection id="system" title="Arab BH — Light & Dark" subtitle="One purple family · A-layout + B-controls · same brand, two themes">
+        <DCArtboard id="sys" label="Theme system" width={620} height={300}><SystemBoard/></DCArtboard>
+      </DCSection>
+
+      <Row id="welcome" title="1 · Welcome" subtitle="Splash + entry" screen={<WelcomeA/>}
+        notes={{
+          light:['Clean white canvas; brand lockup centered.','Primary CTA solid purple, secondary ghost.'],
+          dark:['Near-black canvas; brand on a raised, edge-lit card.','CTA keeps the purple with a faint top-gradient.'],
+          accent:['Only the “تسجيل الدخول” primary button.']
+        }}/>
+
+      <Row id="login" title="2 · Login" subtitle="Phone sign-in" screen={<LoginA/>}
+        notes={{
+          light:['Flat form on white; calm greeting.'],
+          dark:['Fields lift off the black; placeholders dim.'],
+          accent:['“دخول” button, the “سجّل الآن” link, focus ring.']
+        }}/>
+
+      <Row id="signup" title="3 · Sign-up" subtitle="Create account" screen={<SignupA/>}
+        notes={{
+          light:['Single column, even rhythm, quiet select.'],
+          dark:['Inputs raised; labels stay high-contrast.'],
+          accent:['The “إنشاء الحساب” CTA only.']
+        }}/>
+
+      <Row id="home" title="4 · Home" subtitle="The main screen" h={H_HOME} screen={<HomeA/>}
+        notes={{
+          light:['No color header — lightweight greeting + search.','One merged “continue” hero; monochrome category rows.'],
+          dark:['Ambient violet bloom lights the greeting; glass cards float over it.','Glowing avatar orb, soft-glow “متابعة” button, frosted nav shelf.'],
+          accent:['Progress bar, “متابعة” button, active nav, % label.']
+        }}/>
+
+      <Row id="courses" title="5 · Online Courses" subtitle="Catalog + cart" h={H_TALL} screen={<CoursesA/>}
+        notes={{
+          light:['Flat white cards; calm price; clear add/added.'],
+          dark:['Cards raise gently; thumbnails dim, not pure black.'],
+          accent:['Selected filter chip, price, primary action.']
+        }}/>
+
+      <Row id="content" title="6 · My Content" subtitle="My courses & notes" screen={<ContentA/>}
+        notes={{
+          light:['Plain title; B segmented tab control.'],
+          dark:['Segmented track on a raised surface; active = purple.'],
+          accent:['Selected tab + “التسجيلات” primary action.']
+        }}/>
+
+      <Row id="schedule" title="7 · Schedule" subtitle="Weekly timetable" h={H_TALL} screen={<ScheduleA/>}
+        notes={{
+          light:['Legible time axis + hairlines; calm event blocks.'],
+          dark:['Grid lines soften to low-opacity white; events tinted indigo.'],
+          accent:['Selected day, FAB, event accent bar.']
+        }}/>
+
+      <Row id="profile" title="8 · Profile" subtitle="Account" h={H_PROFILE} screen={<ProfileA/>}
+        notes={{
+          light:['Calm centered identity; monochrome rows.'],
+          dark:['Identity + rows on near-black; quiet group labels.'],
+          accent:['Grade chip, active “حسابي” nav, edit affordances.']
+        }}/>
+    </DesignCanvas>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

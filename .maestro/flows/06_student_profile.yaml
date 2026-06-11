@@ -1,0 +1,89 @@
+appId: com.example.my_app
+name: "06 · Student — Profile page actions"
+---
+- clearState
+- launchApp
+- waitForAnimationToEnd
+
+- runFlow:
+    file: ../subflows/_login_student.yaml
+    env:
+      OTP: "123456"
+
+- waitForAnimationToEnd
+
+# ── Navigate to Profile ───────────────────────────────────────────
+- tapOn:
+    id: "nav_profile"
+
+- assertVisible:
+    id: "profile_btn_edit_profile"
+- assertVisible:
+    id: "profile_btn_my_courses"
+- assertVisible:
+    id: "profile_btn_theme"
+- assertVisible:
+    id: "profile_btn_help"
+- assertVisible:
+    id: "profile_btn_about"
+
+# ── Edit profile dialog — verify fields exist, then cancel ────────
+- tapOn:
+    id: "profile_btn_edit_profile"
+
+- assertVisible:
+    id: "profile_dialog_field_first_name"
+- assertVisible:
+    id: "profile_dialog_field_last_name"
+- assertVisible:
+    id: "profile_dialog_btn_cancel_edit"
+- assertVisible:
+    id: "profile_dialog_btn_save_edit"
+
+# Cancel without editing
+- tapOn:
+    id: "profile_dialog_btn_cancel_edit"
+- waitForAnimationToEnd
+
+# ── Theme picker ──────────────────────────────────────────────────
+- tapOn:
+    id: "profile_btn_theme"
+- waitForAnimationToEnd
+# Dismiss by tapping outside (above the sheet)
+- tapOn:
+    point: "50%, 20%"
+- waitForAnimationToEnd
+
+# ── Help & About toasts ───────────────────────────────────────────
+- tapOn:
+    id: "profile_btn_help"
+- tapOn:
+    id: "profile_btn_about"
+
+# ── Logout dialog — cancel ────────────────────────────────────────
+- scrollUntilVisible:
+    element:
+      id: "profile_btn_logout"
+    direction: DOWN
+- tapOn:
+    id: "profile_btn_logout"
+- assertVisible:
+    id: "profile_dialog_btn_cancel_logout"
+- assertVisible:
+    id: "profile_dialog_btn_confirm_logout"
+- tapOn:
+    id: "profile_dialog_btn_cancel_logout"
+
+# ── Confirm logout ────────────────────────────────────────────────
+- scrollUntilVisible:
+    element:
+      id: "profile_btn_logout"
+    direction: DOWN
+- tapOn:
+    id: "profile_btn_logout"
+- tapOn:
+    id: "profile_dialog_btn_confirm_logout"
+- waitForAnimationToEnd:
+    timeout: 5000
+- assertVisible:
+    id: "welcome_btn_login"

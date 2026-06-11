@@ -1,0 +1,58 @@
+appId: com.example.my_app
+name: "04 · Student — My Courses & Books tabs"
+---
+- clearState
+- launchApp
+- waitForAnimationToEnd
+
+- runFlow:
+    file: ../subflows/_login_student.yaml
+    env:
+      OTP: "123456"
+
+- waitForAnimationToEnd
+
+# ── Navigate to My Courses tab ────────────────────────────────────
+- tapOn:
+    id: "nav_my_courses"
+
+- assertVisible:
+    id: "my_courses_tab_courses"
+- assertVisible:
+    id: "my_courses_tab_books"
+
+# ── Courses tab ───────────────────────────────────────────────────
+- tapOn:
+    id: "my_courses_tab_courses"
+- waitForAnimationToEnd
+
+# Enrolled courses (optional — depends on Supabase state); check first card (index 0)
+- assertVisible:
+    id: "my_courses_btn_view_recordings_0"
+    optional: true
+- assertVisible:
+    id: "my_courses_btn_live_stream_0"
+    optional: true
+- assertVisible:
+    id: "my_courses_btn_continue_course_0"
+    optional: true
+
+# Empty state CTA (optional — only if no courses)
+- assertVisible:
+    id: "my_courses_btn_browse_courses"
+    optional: true
+
+# ── Books tab ─────────────────────────────────────────────────────
+- tapOn:
+    id: "my_courses_tab_books"
+- waitForAnimationToEnd
+
+# Purchased books (optional); check first book (index 0)
+- assertVisible:
+    id: "my_courses_btn_download_book_0"
+    optional: true
+
+# Empty state CTA (optional — only if no books)
+- assertVisible:
+    id: "my_courses_btn_browse_books"
+    optional: true

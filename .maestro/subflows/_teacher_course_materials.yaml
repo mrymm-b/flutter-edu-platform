@@ -1,0 +1,24 @@
+appId: com.example.my_app
+---
+- tapOn:
+    id: "teacher_courses_btn_materials_0"
+- waitForAnimationToEnd
+- assertVisible:
+    id: "materials_btn_back"
+- assertVisible:
+    id: "materials_btn_upload_book"
+- tapOn:
+    id: "materials_btn_upload_book"
+- waitForAnimationToEnd
+- assertVisible:
+    id: "upload_btn_back"
+- assertVisible:
+    id: "upload_btn_pick_file"
+- assertVisible:
+    id: "upload_btn_submit"
+- tapOn:
+    id: "upload_btn_back"
+- waitForAnimationToEnd
+- tapOn:
+    id: "materials_btn_back"
+- waitForAnimationToEnd

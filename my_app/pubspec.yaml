@@ -1,0 +1,62 @@
+name: bh_arab_app
+description: "Educational Platform"
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+  # Calendar
+  table_calendar: ^3.1.2
+
+  # Network & Images
+  cached_network_image: ^3.3.1
+
+  # Supabase
+  supabase_flutter: ^2.8.0
+
+  # State Management
+  flutter_riverpod: ^2.5.1
+
+  # Live Streaming
+  agora_rtc_engine: ^6.3.2
+
+  # Permissions
+  permission_handler: ^11.3.1
+
+  # File picker (book PDF uploads)
+  file_picker: ^8.1.2
+
+  # URL launcher (recording playback + Tap payment redirect)
+  url_launcher: ^6.3.0
+
+  # Video replay (in-app player for recordings)
+  video_player: ^2.9.2
+
+  # Theme persistence
+  shared_preferences: ^2.3.3
+
+  # Fonts (IBM Plex Sans Arabic)
+  google_fonts: ^6.2.1
+
+  # Chat media — voice recording + playback + image picker
+  record: ^6.0.0
+  audioplayers: ^6.1.0
+  image_picker: ^1.1.2
+  path_provider: ^2.1.4
+  open_filex: ^4.7.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - ./lib/assets/logo.png

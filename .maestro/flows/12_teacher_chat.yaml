@@ -1,0 +1,28 @@
+﻿appId: com.example.my_app
+name: "12 · Teacher — Chat: open conversation & send message"
+---
+- clearState
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 5000
+
+- runFlow:
+    file: ../subflows/_login_teacher.yaml
+    env:
+      OTP: "123456"
+
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# ── Navigate to Chat tab ──────────────────────────────────────────
+- tapOn:
+    id: "teacher_nav_chat"
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# If a conversation exists — open it, send a reply, go back
+- runFlow:
+    when:
+      visible:
+        id: "teacher_chat_item_conversation_0"
+    file: ../subflows/_teacher_open_conversation.yaml

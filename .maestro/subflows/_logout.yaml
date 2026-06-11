@@ -1,0 +1,19 @@
+# Reusable subflow: log out from any student screen via Profile tab.
+
+appId: com.example.my_app
+---
+- tapOn:
+    id: "nav_profile"
+
+- scrollUntilVisible:
+    element:
+      id: "profile_btn_logout"
+    direction: DOWN
+
+- tapOn:
+    id: "profile_btn_logout"
+
+- tapOn:
+    id: "profile_dialog_btn_confirm_logout"
+- waitForAnimationToEnd:
+    timeout: 5000

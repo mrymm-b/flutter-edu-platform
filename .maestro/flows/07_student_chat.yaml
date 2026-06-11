@@ -1,0 +1,31 @@
+appId: com.example.my_app
+name: "07 · Student — Chat: open conversation & send message"
+---
+- clearState
+- launchApp
+- waitForAnimationToEnd
+
+- runFlow:
+    file: ../subflows/_login_student.yaml
+    env:
+      OTP: "123456"
+
+- waitForAnimationToEnd
+
+# ── Navigate to Chat tab ──────────────────────────────────────────
+- tapOn:
+    id: "nav_messages"
+
+- waitForAnimationToEnd
+
+# If conversation exists — open it, send a message, go back
+- runFlow:
+    when:
+      visible:
+        id: "chat_item_conversation_0"
+    file: ../subflows/_student_open_conversation.yaml
+
+# If empty state — just verify the CTA is present
+- assertVisible:
+    id: "chat_btn_browse_courses"
+    optional: true

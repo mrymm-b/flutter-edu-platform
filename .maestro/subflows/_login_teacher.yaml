@@ -1,0 +1,25 @@
+# Reusable subflow: log in as the test teacher account.
+# Caller must ensure the app is on WelcomePage before running this.
+# Uses dev bypass (loginWithPhone) — no OTP page, goes directly to teacher home.
+
+appId: com.example.my_app
+---
+- tapOn:
+    id: "welcome_btn_login"
+
+- tapOn:
+    id: "login_field_phone"
+# Replace with your test teacher phone number (digits only, no country code)
+- inputText: "XXXXXXXX"
+- hideKeyboard
+
+- tapOn:
+    id: "login_btn_submit"
+
+# Dev bypass: navigates directly to teacher home (no OTP).
+# timeout: 5000 — teacher home has a continuous pulsing animation on the live
+# button that never idles. Without a timeout, waitForAnimationToEnd hangs forever.
+- waitForAnimationToEnd:
+    timeout: 5000
+- assertVisible:
+    id: "teacher_nav_home"

@@ -1,0 +1,43 @@
+appId: com.example.my_app
+name: "E2E — Navigate teacher to upload page and tap file picker"
+---
+- clearState
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 5000
+
+- runFlow:
+    file: ../subflows/_login_teacher.yaml
+
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# Navigate to Courses tab
+- tapOn:
+    id: "teacher_nav_courses"
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# Open course materials (first course)
+- tapOn:
+    id: "teacher_courses_btn_materials"
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# Tap Upload Book CTA
+- tapOn:
+    id: "materials_btn_upload_book"
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# Verify we are on upload page
+- assertVisible:
+    id: "upload_btn_pick_file"
+- assertVisible:
+    id: "upload_btn_submit"
+
+# Tap file picker — opens Android document picker (native)
+- tapOn:
+    id: "upload_btn_pick_file"
+- waitForAnimationToEnd:
+    timeout: 3000

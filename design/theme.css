@@ -1,0 +1,267 @@
+/* ============================================================
+   Arab BH — Light + Dark theme system
+   One purple family · A-layout · B-controls · IBM Plex Sans Arabic
+   Light tokens live on :root; .theme-dark overrides them.
+   Legacy --blue-* names are aliased to the accent so components
+   need no change to follow the active theme.
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+
+:root{
+  /* —— purple family (shared identity) —— */
+  --accent:#5B54C2;          /* primary buttons / active */
+  --accent-press:#4A44A6;
+  --accent-deep:#37327E;
+  --accent-fg:#564FB8;       /* purple text/icon on light */
+  --accent-tint:#ECEBFA;     /* soft active/selected bg */
+  --accent-line:#D8D5F2;
+
+  /* —— neutrals (light) —— */
+  --ink:#16151D;
+  --ink-2:#3C3B47;
+  --muted:#79767F;
+  --faint:#AAA8B3;
+  --line:#ECEBF0;
+  --line-2:#F4F3F7;
+  --card:#FFFFFF;
+  --bg:#FFFFFF;
+  --bg-2:#F7F7FB;
+  --thumb-a:#EEEDF6;
+  --thumb-b:#F7F7FB;
+  --on-accent:#FFFFFF;
+
+  /* legacy aliases → resolve to whichever theme's accent is active */
+  --blue-700:var(--accent);
+  --blue-600:var(--accent-fg);
+  --blue-900:var(--accent-deep);
+  --blue-500:var(--accent);
+  --blue-tint:var(--accent-tint);
+  --blue-tint-2:#F6F5FC;
+  --blue-line:var(--accent-line);
+
+  --r-lg:20px; --r-md:16px; --r-sm:12px; --r-pill:999px;
+  --shadow-card:0 1px 2px rgba(24,22,45,.04);
+  --shadow-float:0 10px 30px rgba(55,50,110,.16);
+  --grad-btn:none;
+  --hi:transparent; /* inset top highlight on dark cards */
+  --app-bg:var(--bg);
+}
+
+/* —— DARK: premium midnight-indigo, layered surfaces (no OLED black) —— */
+.theme-dark{
+  --accent:#7E5BF0;          /* same violet family, richer for the dark env */
+  --accent-press:#6B49E0;
+  --accent-deep:#2A2160;
+  --accent-fg:#BBA9FF;       /* violet text/icon on dark */
+  --accent-tint:rgba(126,91,240,.22);
+  --accent-line:rgba(150,120,255,.42);
+
+  --ink:#F3F1FB;
+  --ink-2:#CFC9E2;
+  --muted:#9A93B5;
+  --faint:#6E6890;
+  --line:rgba(255,255,255,.09);
+  --line-2:rgba(255,255,255,.05);
+
+  /* deep indigo base — real surfaces come from the atmosphere layer below */
+  --bg:#16122A;
+  --bg-2:#221C39;
+  --card:#241E3C;
+  --thumb-a:rgba(150,120,250,.16);
+  --thumb-b:rgba(120,95,210,.06);
+  --on-accent:#FFFFFF;
+
+  /* AMBIENT LIGHTING: violet blooms over a deep indigo gradient */
+  --app-bg:
+    radial-gradient(135% 55% at 50% -8%, rgba(139,92,246,.32), transparent 62%),
+    radial-gradient(90% 45% at 110% 4%, rgba(99,80,224,.22), transparent 55%),
+    radial-gradient(80% 52% at -12% 24%, rgba(168,96,236,.14), transparent 55%),
+    linear-gradient(180deg, #1C1737 0%, #16122A 46%, #110D20 100%);
+
+  --shadow-card:0 12px 34px -12px rgba(0,0,0,.7);
+  --shadow-float:0 18px 44px -10px rgba(40,20,90,.7);
+  --grad-btn:none;
+  --hi:rgba(255,255,255,.08);
+}
+
+/* ---------- Phone shell ---------- */
+.ph{
+  position:relative; width:100%; height:100%;
+  background:var(--app-bg);
+  font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;
+  direction:rtl; color:var(--ink); overflow:hidden;
+  display:flex; flex-direction:column; -webkit-font-smoothing:antialiased;
+}
+.ph *{box-sizing:border-box;}
+.ph.is-scroll{overflow-y:auto;}
+
+/* status bar */
+.sb{flex:0 0 auto; height:34px; display:flex; align-items:center; justify-content:space-between;
+  padding:0 18px; font-size:12.5px; font-weight:600; color:var(--ink); letter-spacing:.2px;}
+.sb-time{direction:ltr; font-variant-numeric:tabular-nums;}
+.sb-ic{display:flex; align-items:center; gap:5px;}
+.sb-ic svg{display:block;}
+
+/* scroll body */
+.body{flex:1 1 auto; overflow-y:auto; padding:0 18px 18px;}
+.body::-webkit-scrollbar{display:none;}
+
+/* ---------- Typography ---------- */
+.h-title{font-size:21px; font-weight:700; letter-spacing:-.2px; line-height:1.2; color:var(--ink);}
+.h-sub{font-size:13.5px; color:var(--muted); font-weight:400; margin-top:3px;}
+.sec-label{font-size:13px; font-weight:600; color:var(--ink); letter-spacing:0;}
+.sec-label.muted{color:var(--muted); font-weight:600; font-size:11.5px; letter-spacing:.4px;}
+.eyebrow{font-size:11px; font-weight:600; color:var(--accent-fg); letter-spacing:.6px;}
+
+/* ---------- Buttons (Design B) ---------- */
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  font-family:inherit; font-weight:600; font-size:14.5px; border-radius:14px;
+  border:1px solid transparent; cursor:pointer; padding:0 18px; height:50px; width:100%; transition:.15s;}
+.btn-primary{background:var(--accent); background-image:var(--grad-btn); color:var(--on-accent);
+  box-shadow:0 1px 0 rgba(0,0,0,.04);}
+.btn-primary:hover{background:var(--accent-press);}
+.btn-ghost{background:var(--card); color:var(--accent-fg); border-color:var(--line);}
+.btn-ghost:hover{border-color:var(--accent-line);}
+.btn-sm{height:42px; border-radius:12px; font-size:13.5px;}
+.btn-tonal{background:var(--accent-tint); color:var(--accent-fg); border-color:transparent;}
+
+/* ---------- Inputs ---------- */
+.field-label{font-size:12.5px; font-weight:600; color:var(--ink-2); margin-bottom:8px;}
+.input{width:100%; height:52px; border:1px solid var(--line); background:var(--bg-2);
+  border-radius:14px; padding:0 16px; font-family:inherit; font-size:14.5px; color:var(--ink);
+  display:flex; align-items:center;}
+.input .ph-text{color:var(--faint);}
+.input.focus{border-color:var(--accent-line); box-shadow:0 0 0 3px var(--accent-tint);}
+.phone-row{display:flex; gap:10px;}
+.phone-row .input{flex:1;}
+.cc{flex:0 0 auto; width:78px; justify-content:center; font-weight:600; color:var(--ink); direction:ltr; background:var(--card);}
+
+/* ---------- Cards (Design A) ---------- */
+.card{background:var(--card); border:1px solid var(--line); border-radius:var(--r-md);
+  box-shadow:var(--shadow-card), inset 0 1px 0 var(--hi);}
+.row-card{display:flex; align-items:center; gap:14px; padding:15px 16px;}
+.row-ic{flex:0 0 auto; width:42px; height:42px; border-radius:12px; display:flex; align-items:center;
+  justify-content:center; background:var(--bg-2); color:var(--ink-2);}
+.row-ic.blue{background:var(--accent-tint); color:var(--accent-fg);}
+.row-main{flex:1 1 auto; min-width:0;}
+.row-main .t{font-size:14.5px; font-weight:600; color:var(--ink);}
+.row-main .s{font-size:12px; color:var(--muted); margin-top:2px;}
+.chev{flex:0 0 auto; color:var(--faint);}
+
+/* chips */
+.chips{display:flex; gap:8px;}
+.chip{height:34px; padding:0 16px; border-radius:var(--r-pill); border:1px solid var(--line);
+  background:var(--card); color:var(--ink-2); font-size:13px; font-weight:500; display:flex; align-items:center;}
+.chip.active{background:var(--accent); color:var(--on-accent); border-color:var(--accent);}
+
+/* segmented control (Design B) */
+.seg{display:flex; background:var(--card); border:1px solid var(--line); border-radius:13px; padding:4px; gap:4px;}
+.seg-opt{flex:1; text-align:center; height:36px; line-height:36px; font-size:13.5px; font-weight:500;
+  color:var(--ink-2); border-radius:10px; cursor:pointer;}
+.seg-opt.active{background:var(--accent); color:var(--on-accent); font-weight:600;}
+
+/* badges */
+.badge{display:inline-flex; align-items:center; height:22px; padding:0 9px; border-radius:7px; font-size:11px; font-weight:600;}
+.badge-soft{background:var(--bg-2); color:var(--muted);}
+.badge-blue{background:var(--accent-tint); color:var(--accent-fg);}
+.badge-live{background:var(--accent-tint); color:var(--accent-fg);}
+
+/* avatar */
+.avatar{border-radius:50%; background:var(--accent-tint); color:var(--accent-fg);
+  display:flex; align-items:center; justify-content:center; font-weight:700;}
+
+/* bottom nav */
+.botnav{flex:0 0 auto; height:66px; background:var(--card); border-top:1px solid var(--line);
+  display:flex; align-items:stretch; padding:6px 6px 8px;}
+.nav-item{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+  color:var(--faint); font-size:10.5px; font-weight:500; position:relative;}
+.nav-item.active{color:var(--accent-fg); font-weight:600;}
+.nav-item.active .nav-ic{color:var(--accent-fg);}
+.nav-ic{color:var(--faint); display:flex; align-items:center; justify-content:center;}
+
+/* misc */
+.hr{height:1px; background:var(--line); border:0; margin:0;}
+.empty{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; text-align:center; color:var(--faint);}
+
+/* ============================================================
+   DARK ATMOSPHERE — ambient lighting, depth, glass, glow
+   (light mode untouched; all rules scoped to .theme-dark)
+   ============================================================ */
+
+/* glass-layered cards floating over the ambient bloom */
+.theme-dark .card{
+  position:relative; overflow:hidden;
+  background:linear-gradient(180deg, rgba(58,49,92,.80), rgba(40,33,66,.84));
+  border:1px solid rgba(255,255,255,.085);
+  box-shadow:0 16px 38px -14px rgba(0,0,0,.7), 0 2px 6px rgba(0,0,0,.3),
+             inset 0 1px 0 rgba(255,255,255,.09);
+  backdrop-filter:blur(16px) saturate(135%);
+  -webkit-backdrop-filter:blur(16px) saturate(135%);
+}
+/* soft violet glow bleeding from the top-corner of each card */
+.theme-dark .card::before{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(95% 130% at 100% -12%, rgba(150,116,250,.20), transparent 52%);
+}
+.theme-dark .card > *{position:relative;}
+
+/* inputs as subtle glass */
+.theme-dark .input,
+.theme-dark .cc{
+  background:rgba(255,255,255,.045);
+  border-color:rgba(255,255,255,.10);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+/* primary action — violet gradient with an ambient glow */
+.theme-dark .btn-primary{
+  background:linear-gradient(180deg,#9168F5 0%,#7E5BF0 52%,#6A47E2 100%);
+  box-shadow:0 12px 28px -8px rgba(126,91,240,.6), inset 0 1px 0 rgba(255,255,255,.28);
+  border:none;
+}
+.theme-dark .btn-primary:hover{background:linear-gradient(180deg,#9d77f7,#7250e8);}
+.theme-dark .btn-ghost{background:rgba(255,255,255,.045); border-color:rgba(255,255,255,.12); color:var(--accent-fg);}
+.theme-dark .btn-tonal{background:rgba(126,91,240,.18); border:1px solid rgba(150,120,255,.22); color:#CFC0FF;}
+
+/* chips / segmented — glassy track, glowing active */
+.theme-dark .chip,
+.theme-dark .seg{background:rgba(255,255,255,.04); border-color:rgba(255,255,255,.09);}
+.theme-dark .chip{color:var(--ink-2);}
+.theme-dark .chip.active,
+.theme-dark .seg-opt.active{
+  background:linear-gradient(180deg,#8B62F2,#6E4BE6); color:#fff; border-color:transparent;
+  box-shadow:0 8px 20px -6px rgba(126,91,240,.65), inset 0 1px 0 rgba(255,255,255,.25);
+}
+
+/* row icons — violet-tinted glass tiles */
+.theme-dark .row-ic{background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.06); color:#C7BAF4;}
+.theme-dark .row-ic.blue{background:rgba(126,91,240,.20); border-color:rgba(150,120,255,.25); color:#D2C4FF;}
+
+/* badges — pills with a faint glowing edge */
+.theme-dark .badge-blue,
+.theme-dark .badge-live{background:rgba(126,91,240,.18); color:#CFC0FF; border:1px solid rgba(150,120,255,.25);}
+.theme-dark .badge-soft{background:rgba(255,255,255,.06); color:var(--muted);}
+
+/* avatar — glowing orb */
+.theme-dark .avatar{
+  background:radial-gradient(120% 120% at 32% 22%, #9A78F6, #5B3FD0 72%); color:#fff;
+  box-shadow:0 10px 26px -6px rgba(126,91,240,.6), inset 0 1px 0 rgba(255,255,255,.32);
+}
+
+/* bottom nav — frosted glass shelf */
+.theme-dark .botnav{
+  background:rgba(20,15,38,.74);
+  backdrop-filter:blur(22px) saturate(135%);
+  -webkit-backdrop-filter:blur(22px) saturate(135%);
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.theme-dark .nav-item.active .nav-ic{filter:drop-shadow(0 0 9px rgba(140,100,240,.7));}
+
+/* iconBtn-style controls (inline-styled) get a glass feel via the bg-2 token,
+   and the floating FAB gets a violet glow */
+.theme-dark .fab{box-shadow:0 12px 30px -6px rgba(126,91,240,.6), inset 0 1px 0 rgba(255,255,255,.25) !important;
+  background:linear-gradient(180deg,#8B62F2,#6E4BE6) !important;}
+
+/* search field & inline icon buttons as subtle glass */
+.theme-dark .searchfield{background:rgba(255,255,255,.045) !important; border-color:rgba(255,255,255,.10) !important;}
+

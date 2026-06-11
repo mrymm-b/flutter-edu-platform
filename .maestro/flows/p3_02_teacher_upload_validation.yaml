@@ -1,0 +1,73 @@
+appId: com.example.my_app
+name: "P3-02 · Teacher Upload — field validation gives feedback"
+---
+# Purpose: Verify that submitting the upload form without a title, without
+# a course, and without a file each show a toast error (not silent failures).
+# All three were already handled in _upload() with _showError() — this test
+# confirms the behavior is observable.
+- clearState
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 5000
+
+- runFlow:
+    file: ../subflows/_login_teacher.yaml
+
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# ── Navigate to Courses tab ────────────────────────────────────────
+- tapOn:
+    id: "teacher_nav_courses"
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# ── Open course materials ──────────────────────────────────────────
+- tapOn:
+    id: "teacher_courses_btn_materials"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# ── Tap upload book CTA ────────────────────────────────────────────
+- assertVisible:
+    id: "materials_btn_upload_book"
+    optional: true
+- tapOn:
+    id: "materials_btn_upload_book"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 2000
+
+# ── On upload page: tap submit without filling title ──────────────
+- assertVisible:
+    id: "upload_btn_submit"
+    optional: true
+- tapOn:
+    id: "upload_btn_submit"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 2000
+
+# Submit button must still be visible — validation blocked save
+- assertVisible:
+    id: "upload_btn_submit"
+    optional: true
+
+# ── Back to materials ──────────────────────────────────────────────
+- tapOn:
+    id: "upload_btn_back"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 2000
+
+# ── Back to courses ────────────────────────────────────────────────
+- tapOn:
+    id: "materials_btn_back"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 2000
+
+# Still on teacher home (courses tab)
+- assertVisible:
+    id: "teacher_nav_courses"

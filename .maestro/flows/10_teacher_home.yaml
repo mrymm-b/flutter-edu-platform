@@ -1,0 +1,67 @@
+﻿appId: com.example.my_app
+name: "10 · Teacher — Home page navigation & live button"
+---
+- clearState
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 5000
+
+- runFlow:
+    file: ../subflows/_login_teacher.yaml
+    env:
+      OTP: "123456"
+
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# ── Teacher home ──────────────────────────────────────────────────
+- assertVisible:
+    id: "teacher_home_btn_start_live"
+- assertVisible:
+    id: "teacher_nav_home"
+- assertVisible:
+    id: "teacher_nav_courses"
+- assertVisible:
+    id: "teacher_nav_chat"
+- assertVisible:
+    id: "teacher_nav_profile"
+
+# ── Bottom nav: Courses ───────────────────────────────────────────
+- tapOn:
+    id: "teacher_nav_courses"
+- waitForAnimationToEnd:
+    timeout: 5000
+- assertVisible:
+    id: "teacher_courses_tab_courses"
+
+# ── Bottom nav: Chat ──────────────────────────────────────────────
+- tapOn:
+    id: "teacher_nav_chat"
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# ── Bottom nav: Profile ───────────────────────────────────────────
+- tapOn:
+    id: "teacher_nav_profile"
+- waitForAnimationToEnd:
+    timeout: 5000
+- scrollUntilVisible:
+    element:
+      id: "teacher_profile_btn_logout"
+    direction: DOWN
+- assertVisible:
+    id: "teacher_profile_btn_logout"
+
+# ── Return to Home ────────────────────────────────────────────────
+- tapOn:
+    id: "teacher_nav_home"
+- waitForAnimationToEnd:
+    timeout: 5000
+- assertVisible:
+    id: "teacher_home_btn_start_live"
+
+# ── Start live session button visible (don't actually start) ──────
+# The button navigates to the live session page which launches Agora.
+# We only verify the button is tappable, not the full Agora flow.
+- assertVisible:
+    id: "teacher_home_btn_start_live"

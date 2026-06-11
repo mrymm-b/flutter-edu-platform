@@ -1,0 +1,54 @@
+﻿appId: com.example.my_app
+name: "11 · Teacher — Courses & books tabs, materials"
+---
+- clearState
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 5000
+
+- runFlow:
+    file: ../subflows/_login_teacher.yaml
+    env:
+      OTP: "123456"
+
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# ── Navigate to Courses tab ───────────────────────────────────────
+- tapOn:
+    id: "teacher_nav_courses"
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# ── Tabs ──────────────────────────────────────────────────────────
+- assertVisible:
+    id: "teacher_courses_tab_courses"
+- assertVisible:
+    id: "teacher_courses_tab_books"
+
+# ── Courses tab ───────────────────────────────────────────────────
+- tapOn:
+    id: "teacher_courses_tab_courses"
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# Verify action buttons on the first course card (index 0)
+- assertVisible:
+    id: "teacher_courses_btn_start_live_0"
+    optional: true
+- assertVisible:
+    id: "teacher_courses_btn_materials_0"
+    optional: true
+
+# Open course materials if the button is present
+- runFlow:
+    when:
+      visible:
+        id: "teacher_courses_btn_materials_0"
+    file: ../subflows/_teacher_course_materials.yaml
+
+# ── Books tab ─────────────────────────────────────────────────────
+- tapOn:
+    id: "teacher_courses_tab_books"
+- waitForAnimationToEnd:
+    timeout: 5000

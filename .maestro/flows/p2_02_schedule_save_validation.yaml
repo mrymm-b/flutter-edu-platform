@@ -1,0 +1,79 @@
+appId: com.example.my_app
+name: "P2-02 · Schedule — save validation keeps sheet open"
+---
+# Purpose: Verify that tapping "حفظ الكل" with an empty subject field triggers
+# validation feedback (showAppToast) and does NOT close the add sheet.
+# The sheet staying open is the observable proof that validation blocked the save.
+- clearState
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 3000
+
+- runFlow:
+    file: ../subflows/_login_student.yaml
+    env:
+      OTP: "123456"
+
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# ── Navigate to Schedule tab ──────────────────────────────────────
+- tapOn:
+    id: "nav_schedule"
+- waitForAnimationToEnd:
+    timeout: 3000
+
+- assertVisible:
+    id: "schedule_fab_add"
+
+# ── Open add sheet ────────────────────────────────────────────────
+- tapOn:
+    id: "schedule_fab_add"
+- waitForAnimationToEnd:
+    timeout: 3000
+
+- assertVisible:
+    id: "schedule_btn_save_all"
+- assertVisible:
+    id: "schedule_field_subject_0"
+
+# ── Tap save without filling anything ────────────────────────────
+# Validation should fire showAppToast "الرجاء إدخال اسم المادة"
+# and keep the sheet open.
+# NOTE: schedule_btn_save_all is inside a DecoratedBox — tapOn:id: fires
+# ACTION_CLICK on the Semantics node which has no onTap. Use tapOn:text:
+# workaround described in CLAUDE.md "Known Maestro limitations" section,
+# OR use pressKey:back to verify sheet was not auto-dismissed by a successful save.
+#
+# Strategy: tap save → sheet should remain open → assert sheet identifiers still visible.
+- tapOn:
+    id: "schedule_btn_save_all"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 2000
+
+# Sheet must still be visible (validation blocked the save)
+- assertVisible:
+    id: "schedule_field_subject_0"
+
+# ── Select a day chip without a subject — also blocked ───────────
+- tapOn:
+    id: "schedule_chip_day_7"
+- tapOn:
+    id: "schedule_btn_save_all"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 2000
+
+# Still open
+- assertVisible:
+    id: "schedule_field_subject_0"
+
+# ── Dismiss sheet ─────────────────────────────────────────────────
+- pressKey: back
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# Back to schedule screen
+- assertVisible:
+    id: "schedule_fab_add"

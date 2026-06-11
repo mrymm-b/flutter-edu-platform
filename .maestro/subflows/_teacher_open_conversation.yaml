@@ -1,0 +1,21 @@
+appId: com.example.my_app
+---
+- tapOn:
+    id: "teacher_chat_item_conversation_0"
+- waitForAnimationToEnd
+- assertVisible:
+    id: "teacher_conversation_btn_back"
+- assertVisible:
+    id: "teacher_conversation_field_message"
+- assertVisible:
+    id: "teacher_conversation_btn_send"
+- tapOn:
+    id: "teacher_conversation_field_message"
+- inputText: "أهلاً، بالتأكيد سأساعدك"
+- hideKeyboard
+- tapOn:
+    id: "teacher_conversation_btn_send"
+- waitForAnimationToEnd
+- tapOn:
+    id: "teacher_conversation_btn_back"
+- waitForAnimationToEnd

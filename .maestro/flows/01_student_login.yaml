@@ -1,0 +1,53 @@
+appId: com.example.my_app
+name: "01 · Student — Login & Logout"
+---
+# ── Setup: fresh app state ────────────────────────────────────────
+- clearState
+- launchApp
+- waitForAnimationToEnd
+
+# ── Welcome page ─────────────────────────────────────────────────
+- assertVisible:
+    id: "welcome_btn_login"
+- assertVisible:
+    id: "welcome_btn_register"
+
+# ── Navigate to login ─────────────────────────────────────────────
+- tapOn:
+    id: "welcome_btn_login"
+
+# ── Login page elements ───────────────────────────────────────────
+- assertVisible:
+    id: "login_field_phone"
+- assertVisible:
+    id: "login_btn_submit"
+- assertVisible:
+    id: "login_btn_go_to_register"
+
+# ── Try submitting empty field — button should still be tappable ──
+- tapOn:
+    id: "login_btn_submit"
+
+# ── Enter phone and submit ────────────────────────────────────────
+- tapOn:
+    id: "login_field_phone"
+# Replace with your test student phone number (digits only, no country code)
+- inputText: "XXXXXXXX"
+- hideKeyboard
+- tapOn:
+    id: "login_btn_submit"
+
+# ── Dev bypass: lands directly on home (no OTP page) ─────────────
+- assertVisible:
+    id: "home_btn_open_cart"
+- assertVisible:
+    id: "nav_home"
+- assertVisible:
+    id: "nav_profile"
+
+# ── Logout ────────────────────────────────────────────────────────
+- runFlow: ../subflows/_logout.yaml
+
+# ── Back on welcome page ──────────────────────────────────────────
+- assertVisible:
+    id: "welcome_btn_login"

@@ -1,0 +1,5 @@
+appId: com.example.my_app
+name: "Test with name field"
+---
+- launchApp
+- waitForAnimationToEnd

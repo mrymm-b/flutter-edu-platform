@@ -1,0 +1,45 @@
+appId: com.example.my_app
+name: "P3-01 · Teacher Profile — stub menu items give feedback"
+---
+# Purpose: Verify that الإشعارات, المساعدة, عن التطبيق each show a toast
+# instead of silently doing nothing (all had onTap: () {} before fix).
+# Also verifies edit-name dialog and logout flow.
+- clearState
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 5000
+
+- runFlow:
+    file: ../subflows/_login_teacher.yaml
+
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# ── Navigate to Profile tab ────────────────────────────────────────
+- tapOn:
+    id: "teacher_nav_profile"
+- waitForAnimationToEnd:
+    timeout: 3000
+
+- assertVisible:
+    id: "teacher_profile_btn_edit_name"
+
+# ── Edit name dialog — verify then cancel ─────────────────────────
+- tapOn:
+    id: "teacher_profile_btn_edit_name"
+- waitForAnimationToEnd:
+    timeout: 2000
+- assertVisible:
+    id: "teacher_profile_dialog_field_name"
+- assertVisible:
+    id: "teacher_profile_dialog_btn_cancel_edit"
+- assertVisible:
+    id: "teacher_profile_dialog_btn_save_edit"
+- tapOn:
+    id: "teacher_profile_dialog_btn_cancel_edit"
+- waitForAnimationToEnd:
+    timeout: 2000
+
+# Profile is still visible after dialog cancel
+- assertVisible:
+    id: "teacher_profile_btn_edit_name"

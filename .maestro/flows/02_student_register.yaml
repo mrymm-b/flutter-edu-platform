@@ -1,0 +1,35 @@
+appId: com.example.my_app
+name: "02 · Student — Register page UI & navigation"
+---
+# Tests register page UI, form elements, and navigation to login.
+# Skips actual registration to avoid creating non-repeatable DB records.
+
+- clearState
+- launchApp
+- waitForAnimationToEnd
+
+# ── Welcome → Register ────────────────────────────────────────────
+- assertVisible:
+    id: "welcome_btn_register"
+- tapOn:
+    id: "welcome_btn_register"
+
+# ── Register page elements ────────────────────────────────────────
+- assertVisible:
+    id: "register_field_name"
+- assertVisible:
+    id: "register_field_phone"
+- assertVisible:
+    id: "register_field_grade"
+- assertVisible:
+    id: "register_btn_submit"
+- assertVisible:
+    id: "register_btn_go_to_login"
+
+# ── "Go to login" link pops back to welcome page ─────────────────
+- tapOn:
+    id: "register_btn_go_to_login"
+- assertVisible:
+    id: "welcome_btn_login"
+- assertVisible:
+    id: "welcome_btn_register"

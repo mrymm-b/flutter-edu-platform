@@ -1,0 +1,52 @@
+appId: com.example.my_app
+name: "P1-01 · Login — field validation & server errors"
+---
+- clearState
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 3000
+
+- tapOn:
+    id: "welcome_btn_login"
+
+# ── Case 1: Empty phone submit ────────────────────────────────────
+# Expected: inline error "رقم الجوال مطلوب" appears immediately
+- tapOn:
+    id: "login_btn_submit"
+- assertVisible:
+    id: "login_error_field_phone"
+
+# ── Case 2: Single digit — too short ─────────────────────────────
+# Expected: inline error "رقم الهاتف غير صحيح"
+- tapOn:
+    id: "login_field_phone"
+- inputText: "1"
+- hideKeyboard
+# Error should clear as user types
+- assertNotVisible:
+    id: "login_error_field_phone"
+- tapOn:
+    id: "login_btn_submit"
+- assertVisible:
+    id: "login_error_field_phone"
+
+# ── Case 3: Valid format but number not in database ───────────────
+# launchApp restarts fresh (keeps cleared auth state from clearState at top)
+# without triggering back navigation that would exit the app.
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 3000
+- tapOn:
+    id: "welcome_btn_login"
+- waitForAnimationToEnd:
+    timeout: 2000
+- tapOn:
+    id: "login_field_phone"
+- inputText: "11111111"
+- hideKeyboard
+- tapOn:
+    id: "login_btn_submit"
+- waitForAnimationToEnd:
+    timeout: 15000
+- assertVisible:
+    id: "login_error_server"

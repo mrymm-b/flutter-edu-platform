@@ -1,0 +1,81 @@
+appId: com.example.my_app
+name: "08 · Student — Private lessons: browse & book"
+---
+- clearState
+- launchApp
+- waitForAnimationToEnd
+
+- runFlow:
+    file: ../subflows/_login_student.yaml
+    env:
+      OTP: "123456"
+
+- waitForAnimationToEnd
+
+# ── Navigate to Private Lessons from home card ────────────────────
+# Dynamic content (schedule, live banners, continue-learning) may push card
+# below fold — scroll until visible then tap.
+- scrollUntilVisible:
+    element:
+      id: "home_card_private_lessons"
+    direction: DOWN
+- tapOn:
+    id: "home_card_private_lessons"
+
+- waitForAnimationToEnd
+
+- assertVisible:
+    id: "private_lessons_btn_back"
+
+# ── Filter chips ──────────────────────────────────────────────────
+- assertVisible:
+    id: "private_lessons_chip_all"
+
+# Tap "الكل" chip
+- tapOn:
+    id: "private_lessons_chip_all"
+- waitForAnimationToEnd
+
+# Try a subject filter chip if one exists
+- tapOn:
+    id: "private_lessons_chip_filter"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    id: "private_lessons_chip_all"
+    optional: true
+- waitForAnimationToEnd
+
+# ── Book a teacher ────────────────────────────────────────────────
+- tapOn:
+    id: "private_lessons_btn_book"
+    optional: true
+- waitForAnimationToEnd
+
+# ── Booking calendar ──────────────────────────────────────────────
+- assertVisible:
+    id: "booking_btn_back"
+    optional: true
+- assertVisible:
+    id: "booking_btn_confirm"
+    optional: true
+
+# Attempt to confirm (may show duplicate warning)
+- tapOn:
+    id: "booking_btn_confirm"
+    optional: true
+- waitForAnimationToEnd
+
+# Back to private lessons
+- tapOn:
+    id: "booking_btn_back"
+    optional: true
+- waitForAnimationToEnd
+
+# ── Back to home ──────────────────────────────────────────────────
+- tapOn:
+    id: "private_lessons_btn_back"
+- scrollUntilVisible:
+    element:
+      id: "home_card_private_lessons"
+    direction: DOWN

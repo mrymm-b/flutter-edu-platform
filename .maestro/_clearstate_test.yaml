@@ -1,0 +1,5 @@
+appId: com.example.my_app
+---
+- clearState: true
+- launchApp
+- waitForAnimationToEnd

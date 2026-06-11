@@ -1,0 +1,100 @@
+appId: com.example.my_app
+name: "03 · Student — Browse courses & books, add to cart"
+---
+- clearState
+- launchApp
+- waitForAnimationToEnd
+
+- runFlow:
+    file: ../subflows/_login_student.yaml
+    env:
+      OTP: "123456"
+
+- waitForAnimationToEnd
+
+# ── Cart badge present in header (always visible, not in scroll view) ─────
+- assertVisible:
+    id: "home_btn_open_cart"
+
+# ══ Online Courses ════════════════════════════════════════════════
+# Dynamic content (schedule, live banners, continue-learning) may push cards
+# below fold — use scrollUntilVisible so the test handles any scroll state.
+- scrollUntilVisible:
+    element:
+      id: "home_card_online_courses"
+    direction: DOWN
+- tapOn:
+    id: "home_card_online_courses"
+
+- assertVisible:
+    id: "category_online_btn_back"
+- assertVisible:
+    id: "category_online_btn_open_cart"
+
+# Add first available course to cart (index 0)
+- scrollUntilVisible:
+    element:
+      id: "category_online_btn_add_to_cart_0"
+    direction: DOWN
+- tapOn:
+    id: "category_online_btn_add_to_cart_0"
+
+# Open first course detail (index 0)
+- scrollUntilVisible:
+    element:
+      id: "category_online_btn_details_0"
+    direction: DOWN
+- tapOn:
+    id: "category_online_btn_details_0"
+
+- assertVisible:
+    id: "course_detail_btn_back"
+- tapOn:
+    id: "course_detail_btn_back"
+
+# Back to home via back button
+- tapOn:
+    id: "category_online_btn_back"
+
+# ══ Books ═════════════════════════════════════════════════════════
+# Scroll to books card (home may still be scrolled from before)
+- scrollUntilVisible:
+    element:
+      id: "home_card_books"
+    direction: DOWN
+- tapOn:
+    id: "home_card_books"
+
+- assertVisible:
+    id: "category_books_btn_back"
+- assertVisible:
+    id: "category_books_btn_open_cart"
+
+# Add first book to cart (index 0)
+- scrollUntilVisible:
+    element:
+      id: "category_books_btn_add_to_cart_0"
+    direction: DOWN
+- tapOn:
+    id: "category_books_btn_add_to_cart_0"
+
+- tapOn:
+    id: "category_books_btn_back"
+
+# ── Verify private lessons card exists ────────────────────────────
+- scrollUntilVisible:
+    element:
+      id: "home_card_private_lessons"
+    direction: DOWN
+
+# ── Open cart from home header ────────────────────────────────────
+- tapOn:
+    id: "home_btn_open_cart"
+
+- assertVisible:
+    id: "cart_btn_back"
+- assertVisible:
+    id: "cart_btn_checkout"
+
+- tapOn:
+    id: "cart_btn_back"

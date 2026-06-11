@@ -1,0 +1,33 @@
+# Reusable subflow: log in as the test student account.
+# Caller must ensure the app is on WelcomePage before running this.
+# Uses dev bypass (loginWithPhone) — no OTP page, goes directly to home.
+
+appId: com.example.my_app
+---
+# Welcome → Login
+# extendedWaitUntil fixes race condition: waitForAnimationToEnd in the caller
+# returns before WelcomePage finishes rendering — this waits up to 20s explicitly.
+# 20s allows for slow emulator startup after many consecutive test runs.
+- extendedWaitUntil:
+    visible:
+      id: "welcome_btn_login"
+    timeout: 20000
+- tapOn:
+    id: "welcome_btn_login"
+
+# Login page
+- tapOn:
+    id: "login_field_phone"
+# Replace with your test student phone number (digits only, no country code)
+- inputText: "XXXXXXXX"
+- hideKeyboard
+
+- tapOn:
+    id: "login_btn_submit"
+
+# Dev bypass: navigates directly to home (no OTP).
+# extendedWaitUntil waits for Supabase call + navigation to finish.
+- extendedWaitUntil:
+    visible:
+      id: "home_btn_open_cart"
+    timeout: 15000

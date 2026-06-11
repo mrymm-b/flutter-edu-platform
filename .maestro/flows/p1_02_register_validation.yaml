@@ -1,0 +1,64 @@
+appId: com.example.my_app
+name: "P1-02 · Register — field validation & duplicate phone"
+---
+- clearState
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 3000
+
+- tapOn:
+    id: "welcome_btn_login"
+- tapOn:
+    id: "login_btn_go_to_register"
+
+# ── Case 1: All empty submit ──────────────────────────────────────
+# Expected: name error appears first
+- tapOn:
+    id: "register_btn_submit"
+- assertVisible:
+    id: "register_error_field_name"
+
+# ── Case 2: Name filled, phone empty ─────────────────────────────
+# Expected: phone error appears
+- tapOn:
+    id: "register_field_name"
+- inputText: "Ahmed"
+- hideKeyboard
+# Name error clears as user types
+- assertNotVisible:
+    id: "register_error_field_name"
+- tapOn:
+    id: "register_btn_submit"
+- assertVisible:
+    id: "register_error_field_phone"
+
+# ── Case 3: Name filled, phone too short ─────────────────────────
+# Expected: phone error re-appears
+- tapOn:
+    id: "register_field_phone"
+- inputText: "1"
+- hideKeyboard
+- assertNotVisible:
+    id: "register_error_field_phone"
+- tapOn:
+    id: "register_btn_submit"
+- assertVisible:
+    id: "register_error_field_phone"
+
+# ── Case 4: Duplicate phone (existing student number) ────────────
+# Expected: server error "هذا الرقم مسجل بالفعل"
+# Replace XXXXXXXX with a phone number already registered in your Supabase users table.
+# Note: field still has "1" from Case 3 (cursor at position 0 after tapOn,
+# so eraseText is unreliable). inputText inserts at position 0, pushing "1"
+# to position 8. If your number ends in "1", eraseText:1 removes the duplicate.
+- tapOn:
+    id: "register_field_phone"
+- inputText: "XXXXXXXX"
+- eraseText: 1
+- hideKeyboard
+- tapOn:
+    id: "register_btn_submit"
+- waitForAnimationToEnd:
+    timeout: 15000
+- assertVisible:
+    id: "register_error_server"

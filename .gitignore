@@ -1,0 +1,19 @@
+# Environment / secrets — never commit these
+.env
+.env.local
+.env.production
+
+# Claude Code internal files
+.claude/
+
+# Maestro test logs
+.maestro/logs/
+
+# Supabase CLI temp
+supabase/.temp/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db

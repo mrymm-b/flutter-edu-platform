@@ -1,0 +1,44 @@
+appId: com.example.my_app
+name: "P2-03 · Notifications — screen opens and displays"
+---
+# Purpose: Verify bell icon navigates to notifications screen.
+# The screen may show empty state or real notifications depending on DB.
+- clearState
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 5000
+
+- runFlow:
+    file: ../subflows/_login_student.yaml
+    env:
+      OTP: "123456"
+
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# ── Open notifications from header bell ───────────────────────────
+- assertVisible:
+    id: "home_btn_notifications"
+
+- tapOn:
+    id: "home_btn_notifications"
+
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# ── Notifications screen ──────────────────────────────────────────
+- assertVisible:
+    id: "notifications_btn_back"
+
+- assertVisible:
+    id: "notifications_btn_mark_all_read"
+
+# ── Back to home ──────────────────────────────────────────────────
+- tapOn:
+    id: "notifications_btn_back"
+
+- waitForAnimationToEnd:
+    timeout: 2000
+
+- assertVisible:
+    id: "home_btn_open_cart"

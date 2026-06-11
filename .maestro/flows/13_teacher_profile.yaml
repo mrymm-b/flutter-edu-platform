@@ -1,0 +1,73 @@
+﻿appId: com.example.my_app
+name: "13 · Teacher — Profile: edit name, cancel logout, confirm logout"
+---
+- clearState
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 5000
+
+- runFlow:
+    file: ../subflows/_login_teacher.yaml
+    env:
+      OTP: "123456"
+
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# ── Navigate to Profile tab ───────────────────────────────────────
+- tapOn:
+    id: "teacher_nav_profile"
+- waitForAnimationToEnd:
+    timeout: 5000
+
+- assertVisible:
+    id: "teacher_profile_btn_edit_name"
+
+# ── Edit name dialog — verify fields, then cancel ─────────────────
+- tapOn:
+    id: "teacher_profile_btn_edit_name"
+- waitForAnimationToEnd:
+    timeout: 5000
+
+- assertVisible:
+    id: "teacher_profile_dialog_field_name"
+- assertVisible:
+    id: "teacher_profile_dialog_btn_cancel_edit"
+- assertVisible:
+    id: "teacher_profile_dialog_btn_save_edit"
+
+# Cancel without editing
+- tapOn:
+    id: "teacher_profile_dialog_btn_cancel_edit"
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# ── Logout dialog — cancel ────────────────────────────────────────
+- scrollUntilVisible:
+    element:
+      id: "teacher_profile_btn_logout"
+    direction: DOWN
+- tapOn:
+    id: "teacher_profile_btn_logout"
+- assertVisible:
+    id: "teacher_profile_dialog_btn_cancel_logout"
+- assertVisible:
+    id: "teacher_profile_dialog_btn_confirm_logout"
+- tapOn:
+    id: "teacher_profile_dialog_btn_cancel_logout"
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# ── Confirm logout ────────────────────────────────────────────────
+- scrollUntilVisible:
+    element:
+      id: "teacher_profile_btn_logout"
+    direction: DOWN
+- tapOn:
+    id: "teacher_profile_btn_logout"
+- tapOn:
+    id: "teacher_profile_dialog_btn_confirm_logout"
+- waitForAnimationToEnd:
+    timeout: 5000
+- assertVisible:
+    id: "login_field_phone"
