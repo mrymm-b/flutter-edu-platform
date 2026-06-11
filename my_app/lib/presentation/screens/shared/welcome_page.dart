@@ -27,7 +27,7 @@ class WelcomePage extends StatelessWidget {
                   Semantics(
                     label: 'منصة التعليم الشاملة',
                     child: Image.asset(
-                      'lib/assets/logo.png',
+                      'assets/logo.png',
                       width: 180,
                       height: 90,
                       errorBuilder: (_, __, ___) => Icon(

@@ -9,6 +9,7 @@ A full-featured educational platform connecting students with teachers, built wi
 ## Features
 
 **Student**
+
 - Browse and purchase courses and PDF books
 - Watch live sessions and recordings
 - Personal school timetable (stored locally)
@@ -17,6 +18,7 @@ A full-featured educational platform connecting students with teachers, built wi
 - Push notifications
 
 **Teacher**
+
 - Manage courses and books
 - Live broadcast via Agora RTC
 - Upload recordings
@@ -27,14 +29,14 @@ A full-featured educational platform connecting students with teachers, built wi
 
 ## Tech Stack
 
-| Package | Purpose |
-|---------|---------|
-| Flutter 3.x | UI framework |
-| Riverpod | State management |
-| Supabase | Database + Auth + Storage |
-| Agora RTC SDK v6 | Live streaming |
-| Tap Payments | Payments (Bahrain) |
-| SharedPreferences | Local storage |
+| Package           | Purpose                   |
+| ----------------- | ------------------------- |
+| Flutter 3.x       | UI framework              |
+| Riverpod          | State management          |
+| Supabase          | Database + Auth + Storage |
+| Agora RTC SDK v6  | Live streaming            |
+| Tap Payments      | Payments (Bahrain)        |
+| SharedPreferences | Local storage             |
 
 ---
 
@@ -113,12 +115,12 @@ Full schema: [`supabase/schema.sql`](supabase/schema.sql)
 
 ### Storage Buckets
 
-| Bucket | Access |
-|--------|--------|
-| avatars | Public |
-| course-thumbnails | Public |
-| books | Private |
-| recordings | Private |
+| Bucket            | Access  |
+| ----------------- | ------- |
+| avatars           | Public  |
+| course-thumbnails | Public  |
+| books             | Private |
+| recordings        | Private |
 
 ### Required RLS Policies
 

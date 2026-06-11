@@ -318,7 +318,8 @@ class _TeacherConversationDetailPageState
           ],
         ),
       ),
-    );
+    ),
+  );
   }
 
   Widget _buildNormalBar(bool hasText) {
