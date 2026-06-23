@@ -8,9 +8,13 @@ A full-featured educational platform connecting students with teachers, built wi
 
 ## Screenshots
 
-| Welcome | Login | Student Home |
-|:---:|:---:|:---:|
+|                  Welcome                   |                 Login                  |                      Student Home                      |
+| :----------------------------------------: | :------------------------------------: | :----------------------------------------------------: |
 | ![Welcome Page](images/welcome%20page.png) | ![Login Page](images/login%20page.png) | ![Student Home Page](images/student%20home%20page.png) |
+
+|                      Online Courses                       |           Cart           |                   Timetable                    |
+| :-------------------------------------------------------: | :----------------------: | :--------------------------------------------: |
+| ![Online Courses Page](images/online%20course%20page.png) | ![Cart](images/cart.png) | ![Timetable Page](images/timetable%20page.png) |
 
 ---
 
