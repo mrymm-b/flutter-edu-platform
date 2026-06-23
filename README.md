@@ -8,13 +8,35 @@ A full-featured educational platform connecting students with teachers, built wi
 
 ## Screenshots
 
-|                  Welcome                   |                 Login                  |                      Student Home                      |
-| :----------------------------------------: | :------------------------------------: | :----------------------------------------------------: |
-| ![Welcome Page](images/welcome%20page.png) | ![Login Page](images/login%20page.png) | ![Student Home Page](images/student%20home%20page.png) |
+<div align="center">
+  <table>
+    <tr>
+      <td width="33%"><img src="images/welcome%20page.png" width="100%" alt="Welcome Page"></td>
+      <td width="33%"><img src="images/login%20page.png" width="100%" alt="Login Page"></td>
+      <td width="33%"><img src="images/student%20home%20page.png" width="100%" alt="Student Home Page"></td>
+    </tr>
+    <tr>
+      <td align="center"><strong>Welcome</strong></td>
+      <td align="center"><strong>Login</strong></td>
+      <td align="center"><strong>Student Home</strong></td>
+    </tr>
+  </table>
+</div>
 
-|                      Online Courses                       |           Cart           |                   Timetable                    |
-| :-------------------------------------------------------: | :----------------------: | :--------------------------------------------: |
-| ![Online Courses Page](images/online%20course%20page.png) | ![Cart](images/cart.png) | ![Timetable Page](images/timetable%20page.png) |
+<div align="center">
+  <table>
+    <tr>
+      <td width="33%"><img src="images/online%20course%20page.png" width="100%" alt="Online Courses Page"></td>
+      <td width="33%"><img src="images/cart.png" width="100%" alt="Cart"></td>
+      <td width="33%"><img src="images/timetable%20page.png" width="100%" alt="Timetable Page"></td>
+    </tr>
+    <tr>
+      <td align="center"><strong>Online Courses</strong></td>
+      <td align="center"><strong>Cart</strong></td>
+      <td align="center"><strong>Timetable</strong></td>
+    </tr>
+  </table>
+</div>
 
 ---
 
