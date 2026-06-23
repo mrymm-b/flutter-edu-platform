@@ -13,15 +13,13 @@ import '../../providers/messages_provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/teacher_provider.dart';
 import '../../widgets/atmosphere_background.dart';
-import '../../widgets/glass_card.dart';
 
 const _kBlue = Color(0xFF6264A7);
 const _kDark = Color(0xFF464775);
 
 class TeacherConversationDetailPage extends ConsumerStatefulWidget {
   final Conversation conversation;
-  const TeacherConversationDetailPage(
-      {super.key, required this.conversation});
+  const TeacherConversationDetailPage({super.key, required this.conversation});
 
   @override
   ConsumerState<TeacherConversationDetailPage> createState() =>
@@ -93,14 +91,13 @@ class _TeacherConversationDetailPageState
     final dir = await getTemporaryDirectory();
     final path =
         '${dir.path}/voice_${DateTime.now().millisecondsSinceEpoch}.m4a';
-    await _recorder.start(
-        const RecordConfig(encoder: AudioEncoder.aacLc), path: path);
+    await _recorder.start(const RecordConfig(encoder: AudioEncoder.aacLc),
+        path: path);
     setState(() {
       _isRecording = true;
       _recordingDuration = Duration.zero;
     });
-    _recordingTimer =
-        Timer.periodic(const Duration(seconds: 1), (_) {
+    _recordingTimer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() => _recordingDuration += const Duration(seconds: 1));
     });
   }
@@ -173,153 +170,151 @@ class _TeacherConversationDetailPageState
         backgroundColor: Colors.transparent,
         body: AtmosphereBackground(
           child: Column(
-          children: [
-            // ── Header ──────────────────────────────────────────────────────
-            SafeArea(
-              bottom: false,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(
-                    AppTokens.screenPad, 14, AppTokens.screenPad, 10),
-                child: Row(
-                  children: [
-                    Semantics(
-                      label: 'رجوع',
-                      identifier: 'teacher_conversation_btn_back',
-                      child: GestureDetector(
-                        onTap: () => Navigator.pop(context),
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: t.isDark
-                                ? Colors.white.withValues(alpha: 0.06)
-                                : t.bg2,
-                            borderRadius:
-                                BorderRadius.circular(AppTokens.rSm),
-                            border: Border.all(color: t.line),
+            children: [
+              // ── Header ──────────────────────────────────────────────────────
+              SafeArea(
+                bottom: false,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                      AppTokens.screenPad, 14, AppTokens.screenPad, 10),
+                  child: Row(
+                    children: [
+                      Semantics(
+                        label: 'رجوع',
+                        identifier: 'teacher_conversation_btn_back',
+                        child: GestureDetector(
+                          onTap: () => Navigator.pop(context),
+                          child: Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: t.isDark
+                                  ? Colors.white.withValues(alpha: 0.06)
+                                  : t.bg2,
+                              borderRadius:
+                                  BorderRadius.circular(AppTokens.rSm),
+                              border: Border.all(color: t.line),
+                            ),
+                            child: Icon(Icons.arrow_back_ios_new,
+                                color: t.ink2, size: 15),
                           ),
-                          child: Icon(Icons.arrow_back_ios_new,
-                              color: t.ink2, size: 15),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 12),
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: t.accentTint,
-                        shape: BoxShape.circle,
+                      const SizedBox(width: 12),
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: t.accentTint,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(Icons.person_rounded,
+                            color: t.accentFg, size: 20),
                       ),
-                      child: Icon(Icons.person_rounded,
-                          color: t.accentFg, size: 20),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(studentName,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: t.ink)),
-                          Text('طالب',
-                              style:
-                                  TextStyle(fontSize: 12, color: t.muted)),
-                        ],
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(studentName,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: t.ink)),
+                            Text('طالب',
+                                style: TextStyle(fontSize: 12, color: t.muted)),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
 
-            Divider(height: 1, color: t.line),
+              Divider(height: 1, color: t.line),
 
-            // ── Messages ─────────────────────────────────────────────────────
-            Expanded(
-              child: messagesAsync.when(
-                loading: () => const Center(
-                    child: CircularProgressIndicator(color: _kBlue)),
-                error: (_, __) =>
-                    const Center(child: Text('تعذر تحميل الرسائل')),
-                data: (messages) {
-                  if (messages.isEmpty) {
-                    return Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            width: 72,
-                            height: 72,
-                            decoration: BoxDecoration(
-                              color: _kBlue.withValues(alpha: 0.08),
-                              shape: BoxShape.circle,
+              // ── Messages ─────────────────────────────────────────────────────
+              Expanded(
+                child: messagesAsync.when(
+                  loading: () => const Center(
+                      child: CircularProgressIndicator(color: _kBlue)),
+                  error: (_, __) =>
+                      const Center(child: Text('تعذر تحميل الرسائل')),
+                  data: (messages) {
+                    if (messages.isEmpty) {
+                      return Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              width: 72,
+                              height: 72,
+                              decoration: BoxDecoration(
+                                color: _kBlue.withValues(alpha: 0.08),
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                  Icons.chat_bubble_outline_rounded,
+                                  size: 34,
+                                  color: _kBlue),
                             ),
-                            child: const Icon(
-                                Icons.chat_bubble_outline_rounded,
-                                size: 34,
-                                color: _kBlue),
-                          ),
-                          const SizedBox(height: 14),
-                          const Text('ابدأ المحادثة',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFF0F172A))),
-                          const SizedBox(height: 4),
-                          const Text('أرسل أول رسالة للطالب',
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  color: Color(0xFF94A3B8))),
-                        ],
+                            const SizedBox(height: 14),
+                            const Text('ابدأ المحادثة',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF0F172A))),
+                            const SizedBox(height: 4),
+                            const Text('أرسل أول رسالة للطالب',
+                                style: TextStyle(
+                                    fontSize: 13, color: Color(0xFF94A3B8))),
+                          ],
+                        ),
+                      );
+                    }
+                    WidgetsBinding.instance
+                        .addPostFrameCallback((_) => _scrollToBottom());
+                    return ListView.builder(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                      itemCount: messages.length,
+                      itemBuilder: (context, i) => _MessageBubble(
+                        message: messages[i],
+                        isMe: messages[i].senderId == myId,
                       ),
                     );
-                  }
-                  WidgetsBinding.instance
-                      .addPostFrameCallback((_) => _scrollToBottom());
-                  return ListView.builder(
-                    controller: _scrollController,
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                    itemCount: messages.length,
-                    itemBuilder: (context, i) => _MessageBubble(
-                      message: messages[i],
-                      isMe: messages[i].senderId == myId,
-                    ),
-                  );
-                },
+                  },
+                ),
               ),
-            ),
 
-            // ── Upload progress ───────────────────────────────────────────────
-            if (_isUploading)
-              const LinearProgressIndicator(color: _kBlue, minHeight: 2),
+              // ── Upload progress ───────────────────────────────────────────────
+              if (_isUploading)
+                const LinearProgressIndicator(color: _kBlue, minHeight: 2),
 
-            // ── Input Bar ────────────────────────────────────────────────────
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.06),
-                      blurRadius: 12,
-                      offset: const Offset(0, -2)),
-                ],
+              // ── Input Bar ────────────────────────────────────────────────────
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.06),
+                        blurRadius: 12,
+                        offset: const Offset(0, -2)),
+                  ],
+                ),
+                padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+                child: SafeArea(
+                  top: false,
+                  child: _isRecording
+                      ? _buildRecordingBar()
+                      : _buildNormalBar(hasText),
+                ),
               ),
-              padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-              child: SafeArea(
-                top: false,
-                child: _isRecording
-                    ? _buildRecordingBar()
-                    : _buildNormalBar(hasText),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ),
-  );
+    );
   }
 
   Widget _buildNormalBar(bool hasText) {
@@ -444,7 +439,8 @@ class _TeacherConversationDetailPageState
                     end: Alignment.bottomLeft),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.send_rounded, color: Colors.white, size: 22),
+              child:
+                  const Icon(Icons.send_rounded, color: Colors.white, size: 22),
             ),
           ),
         ),
@@ -469,8 +465,8 @@ class _MessageBubble extends StatelessWidget {
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
-        constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.72),
+        constraints:
+            BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.72),
         padding: isImage
             ? const EdgeInsets.all(4)
             : const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
@@ -579,10 +575,12 @@ class _VoiceBubbleState extends State<_VoiceBubble> {
   @override
   void initState() {
     super.initState();
-    _player.onDurationChanged
-        .listen((d) { if (mounted) setState(() => _duration = d); });
-    _player.onPositionChanged
-        .listen((p) { if (mounted) setState(() => _position = p); });
+    _player.onDurationChanged.listen((d) {
+      if (mounted) setState(() => _duration = d);
+    });
+    _player.onPositionChanged.listen((p) {
+      if (mounted) setState(() => _position = p);
+    });
     _player.onPlayerStateChanged.listen((s) {
       if (mounted) setState(() => _isPlaying = s == PlayerState.playing);
     });
@@ -613,8 +611,9 @@ class _VoiceBubbleState extends State<_VoiceBubble> {
     final progress = _duration.inMilliseconds > 0
         ? _position.inMilliseconds / _duration.inMilliseconds
         : 0.0;
-    final displayTime =
-        (_isPlaying || _position.inSeconds > 0) ? _fmt(_position) : _fmt(_duration);
+    final displayTime = (_isPlaying || _position.inSeconds > 0)
+        ? _fmt(_position)
+        : _fmt(_duration);
 
     return Row(
       mainAxisSize: MainAxisSize.min,
